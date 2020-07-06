@@ -1,0 +1,34 @@
+scalar GraphQLDate
+
+enum StatusType {
+  New
+  Open
+  Closed
+}
+
+type Item {
+  id: Int!
+  title: String!
+  status: StatusType!
+  owner: String
+  createdAt: GraphQLDate!
+  updatedAt: GraphQLDate
+}
+
+"Toned down Item, used as inputs, without server generated values."
+input ItemInputs {
+  title: String!
+  "Optional, if not supplied, will be set to 'New'"
+  status: StatusType = New
+  owner: String
+  updatedAt: GraphQLDate
+}
+
+##### Top level declarations
+
+type Query {
+  itemList: [Item!]!
+}
+type Mutation {
+  itemAdd(item: ItemInputs!): Item!
+}
